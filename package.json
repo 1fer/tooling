@@ -1,0 +1,27 @@
+{
+  "name": "@1fer/tooling",
+  "version": "0.1.0",
+  "description": "Shared tooling for 1fer projects (currently Prettier)",
+  "type": "module",
+  "private": false,
+  "files": [
+    "prettier/",
+    "bin/",
+    "README.md"
+  ],
+  "exports": {
+    "./prettier": "./prettier/index.json"
+  },
+  "bin": {
+    "1fer-tooling": "./bin/init.mjs"
+  },
+  "peerDependencies": {
+    "prettier": "^3.6.2"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "engines": {
+    "node": ">=20.12.0"
+  }
+}
