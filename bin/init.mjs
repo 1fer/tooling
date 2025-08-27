@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import { readFileSync, writeFileSync, existsSync, copyFileSync, mkdirSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, dirname } from 'node:path'
 import { execSync } from 'node:child_process'
+import { fileURLToPath } from 'node:url'
 
 const cwd = process.cwd()
 const pkgPath = join(cwd, 'package.json')
@@ -14,7 +15,18 @@ if (!existsSync(pkgPath)) {
 const args = new Set(process.argv.slice(2))
 const withInstall = args.has('--install') || args.has('-i')
 
-// Update package.json with Prettier config + scripts
+// helper: resolve file inside this package (works on Win/Mac/Linux)
+const fromPkg = (rel) => fileURLToPath(new URL(rel, import.meta.url))
+
+// copy helper
+function copyTemplate(srcRelUrl, destAbsPath, label) {
+  const src = fromPkg(srcRelUrl)
+  mkdirSync(dirname(destAbsPath), { recursive: true })
+  copyFileSync(src, destAbsPath)
+  console.log(`✓ ${label} created`)
+}
+
+// 1) add prettier config + scripts
 const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'))
 pkg.prettier = '@1fer/tooling/prettier'
 pkg.scripts ||= {}
@@ -23,21 +35,23 @@ pkg.scripts['format:check'] ||= 'prettier --check .'
 writeFileSync(pkgPath, JSON.stringify(pkg, null, 2))
 console.log('✓ Prettier config and scripts added to package.json')
 
-// Ensure .vscode folder exists
-const vscodeDir = join(cwd, '.vscode')
-mkdirSync(vscodeDir, { recursive: true })
-
-// Copy settings.json (Prettier only) if not exists
-const settingsSrc = join(new URL('../vscode/settings.json', import.meta.url).pathname)
-const settingsDest = join(vscodeDir, 'settings.json')
+// 2) .vscode/settings.json (prettier-only)
+const settingsDest = join(cwd, '.vscode', 'settings.json')
 if (!existsSync(settingsDest)) {
-  copyFileSync(settingsSrc, settingsDest)
-  console.log('✓ .vscode/settings.json created (Prettier only)')
+  copyTemplate('../vscode/settings.json', settingsDest, '.vscode/settings.json')
 } else {
   console.log('• .vscode/settings.json already exists — skipped')
 }
 
-// If --install → install Prettier
+// 3) .prettierignore (optional, якщо ти його додаєш)
+const ignoreDest = join(cwd, '.prettierignore')
+if (!existsSync(ignoreDest)) {
+  copyTemplate('../prettier/ignore.txt', ignoreDest, '.prettierignore')
+} else {
+  console.log('• .prettierignore already exists — skipped')
+}
+
+// 4) install prettier if requested
 if (withInstall) {
   console.log('Installing Prettier...')
   execSync('npm i -D prettier', { stdio: 'inherit' })
