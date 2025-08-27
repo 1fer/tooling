@@ -16,6 +16,7 @@
     "prettier/",
     "vscode/",
     "bin/",
+    "src/",
     "README.md"
   ],
   "exports": {
