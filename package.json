@@ -1,6 +1,6 @@
 {
   "name": "@1fer/tooling",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Shared tooling",
   "type": "module",
   "private": false,
