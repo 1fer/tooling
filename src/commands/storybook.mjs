@@ -8,9 +8,9 @@ export async function applyStorybook(ctx) {
   if (ctx.withInstall) {
     console.log('Installing Storybook deps...')
     installDev([
-      '@nuxtjs/storybook@9.1.0',
-      'storybook@9.0.5',
-      '@storybook/vue3-vite@9.0.5',
+      '@nuxtjs/storybook@9.0.1',
+      'storybook@~9.0.18',
+      '@storybook/vue3-vite@~9.0.18',
       '@vitejs/plugin-vue@6.0.1'
     ])
   }
