@@ -1,5 +1,5 @@
 import { existsSync } from 'node:fs'
-import { loadJson, saveJson, paths, copyTemplate } from '../utils/fs.mjs'
+import { loadJson, saveJson, paths } from '../utils/fs.mjs'
 import { installDev } from '../utils/pm.mjs'
 
 export async function applyPrettier(ctx) {
@@ -19,10 +19,4 @@ export async function applyPrettier(ctx) {
     console.log('Installing Prettier...')
     installDev(['prettier'])
   }
-
-  // .prettierignore
-  const fallback = [
-    'node_modules','.nuxt','.output','dist','coverage','.vercel','.husky','.turbo','.idea','.vscode'
-  ].join('\n')
-  copyTemplate('../../prettier/ignore.txt', paths.prettierIgnore, '.prettierignore', fallback)
 }
