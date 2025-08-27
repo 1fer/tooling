@@ -13,6 +13,9 @@ if (cmd === 'init') {
 } else if (cmd === 'prettier') {
   const { applyPrettier } = await import('../src/commands/prettier.mjs')
   await applyPrettier(ctx)
+} else if (cmd === 'eslint') {
+  const { applyESLint } = await import('../src/commands/eslint.mjs')
+  await applyESLint(ctx)
 } else if (cmd === 'vscode') {
   const { applyVSCode } = await import('../src/commands/vscode.mjs')
   await applyVSCode(ctx)

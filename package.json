@@ -14,19 +14,26 @@
   },
   "files": [
     "prettier/",
+    "eslint/",
     "vscode/",
     "bin/",
     "src/",
     "README.md"
   ],
   "exports": {
-    "./prettier": "./prettier/index.json"
+    "./prettier": "./prettier/index.json",
+    "./eslint": "./eslint/index.mjs"
   },
   "bin": {
     "1fer-tooling": "./bin/1fer-tooling.mjs"
   },
   "peerDependencies": {
-    "prettier": "^3.6.2"
+    "prettier": "^3.6.2",
+    "eslint": "^9.0.0",
+    "@nuxt/eslint": "^1.9.0",
+    "eslint-config-prettier": "^10.1.0",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
+    "eslint-plugin-unused-imports": "^4.0.0"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
