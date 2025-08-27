@@ -22,7 +22,7 @@
     "./prettier": "./prettier/index.json"
   },
   "bin": {
-    "1fer-tooling": "./bin/init.mjs"
+    "1fer-tooling": "./bin/1fer-tooling.mjs"
   },
   "peerDependencies": {
     "prettier": "^3.6.2"
