@@ -13,11 +13,11 @@ export async function applyESLint(ctx) {
   if (ctx.withInstall) {
     console.log('Installing ESLint stack...')
     installDev([
-      'eslint@^9.0.0',
-      '@nuxt/eslint@^1.9.0',
-      'eslint-config-prettier@^10.1.0',
-      'eslint-plugin-simple-import-sort@^12.0.0',
-      'eslint-plugin-unused-imports@^4.0.0'
+      'eslint@9.0.0',
+      '@nuxt/eslint@1.9.0',
+      'eslint-config-prettier@10.1.0',
+      'eslint-plugin-simple-import-sort@12.0.0',
+      'eslint-plugin-unused-imports@4.0.0'
     ])
   }
 
